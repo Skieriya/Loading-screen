@@ -1,0 +1,376 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dramatic Lotus Loading Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .loading-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lotus {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .petals-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .petal-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: petalOrbit 12s linear infinite;
+            transform-origin: 50% 50%;
+        }
+
+        /* Staggered delays for a more organic feel - now for 16 petals */
+        .petal-wrapper:nth-child(1) { animation-delay: 0s; }
+        .petal-wrapper:nth-child(2) { animation-delay: 0.75s; }
+        .petal-wrapper:nth-child(3) { animation-delay: 1.5s; }
+        .petal-wrapper:nth-child(4) { animation-delay: 2.25s; }
+        .petal-wrapper:nth-child(5) { animation-delay: 3s; }
+        .petal-wrapper:nth-child(6) { animation-delay: 3.75s; }
+        .petal-wrapper:nth-child(7) { animation-delay: 4.5s; }
+        .petal-wrapper:nth-child(8) { animation-delay: 5.25s; }
+        .petal-wrapper:nth-child(9) { animation-delay: 6s; }
+        .petal-wrapper:nth-child(10) { animation-delay: 6.75s; }
+        .petal-wrapper:nth-child(11) { animation-delay: 7.5s; }
+        .petal-wrapper:nth-child(12) { animation-delay: 8.25s; }
+        .petal-wrapper:nth-child(13) { animation-delay: 9s; }
+        .petal-wrapper:nth-child(14) { animation-delay: 9.75s; }
+        .petal-wrapper:nth-child(15) { animation-delay: 10.5s; }
+        .petal-wrapper:nth-child(16) { animation-delay: 11.25s; }
+
+        .petal {
+            position: absolute;
+            width: 150px;   /* Significantly increased width for starting big */
+            height: 300px; /* Significantly increased height for starting big */
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: 50% 100%;
+            opacity: 0.8;
+            box-shadow: 0 6px 25px rgba(255, 154, 158, 0.4);
+            top: 50%;
+            left: 50%;
+            animation: petalBloomCycle 12s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+            transition: background 0.5s ease;
+        }
+
+        /* Individual petal rotations for initial setup - now for 16 petals */
+        /* Adjusted initial scale to make them cover the screen at 0% animation */
+        .petal:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 0s; }
+        .petal:nth-child(2) { transform: translate(-50%, -100%) rotate(22.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 0.75s; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); }
+        .petal:nth-child(3) { transform: translate(-50%, -100%) rotate(45deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 1.5s; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); }
+        .petal:nth-child(4) { transform: translate(-50%, -100%) rotate(67.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 2.25s; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); }
+        .petal:nth-child(5) { transform: translate(-50%, -100%) rotate(90deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 3s; background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%); }
+        .petal:nth-child(6) { transform: translate(-50%, -100%) rotate(112.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 3.75s; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); }
+        .petal:nth-child(7) { transform: translate(-50%, -100%) rotate(135deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 4.5s; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); }
+        .petal:nth-child(8) { transform: translate(-50%, -100%) rotate(157.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 5.25s; background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%); }
+        .petal:nth-child(9) { transform: translate(-50%, -100%) rotate(180deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 6s; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); }
+        .petal:nth-child(10) { transform: translate(-50%, -100%) rotate(202.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 6.75s; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); }
+        .petal:nth-child(11) { transform: translate(-50%, -100%) rotate(225deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 7.5s; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); }
+        .petal:nth-child(12) { transform: translate(-50%, -100%) rotate(247.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 8.25s; background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%); }
+        .petal:nth-child(13) { transform: translate(-50%, -100%) rotate(270deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 9s; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); }
+        .petal:nth-child(14) { transform: translate(-50%, -100%) rotate(292.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 9.75s; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); }
+        .petal:nth-child(15) { transform: translate(-50%, -100%) rotate(315deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 10.5s; background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%); }
+        .petal:nth-child(16) { transform: translate(-50%, -100%) rotate(337.5deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg); animation-delay: 11.25s; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); }
+        
+        .center {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #ffd700 0%, #ffb347 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            animation: centerPulse 2.5s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .loading-text {
+            position: absolute;
+            bottom: -90px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            animation: textFade 2.5s ease-in-out infinite alternate;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            pointer-events: none;
+            animation: overlayFade 5s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        /* Keyframe Definitions */
+        @keyframes petalOrbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes petalBloomCycle {
+            0% {
+                /* Start very large and slightly off-center for screen coverage */
+                transform: translate(-50%, -100%) rotate(0deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg);
+                opacity: 0.7;
+                box-shadow: 0 6px 25px rgba(255, 154, 158, 0.4);
+            }
+            15% {
+                /* Shrink down to a 'bloomed' state */
+                transform: translate(-50%, -100%) rotate(0deg) translateY(-20px) scale(1.1) perspective(200px) rotateX(0deg);
+                opacity: 1;
+                box-shadow: 0 10px 40px rgba(255, 154, 158, 0.6);
+            }
+            85% {
+                /* Stay in the 'bloomed' state */
+                transform: translate(-50%, -100%) rotate(0deg) translateY(-20px) scale(1.1) perspective(200px) rotateX(0deg);
+                opacity: 1;
+                box-shadow: 0 10px 40px rgba(255, 154, 158, 0.6);
+            }
+            100% {
+                /* Return to the initial very large state */
+                transform: translate(-50%, -100%) rotate(0deg) translateY(-50px) scale(2.5) perspective(200px) rotateX(15deg);
+                opacity: 0.7;
+                box-shadow: 0 6px 25px rgba(255, 154, 158, 0.4);
+            }
+        }
+
+        @keyframes centerPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.25);
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.9);
+            }
+        }
+
+        @keyframes textFade {
+            0% {
+                opacity: 0.6;
+                transform: translateY(0px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes overlayFade {
+            0%, 100% {
+                opacity: 0;
+                background: rgba(255, 255, 255, 0.05);
+            }
+            50% {
+                opacity: 0.15;
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Sparkle animation */
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1) rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        /* Demo Controls */
+        .demo-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .demo-button {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .demo-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="demo-controls">
+        <div class="demo-button" onclick="toggleAnimation()">Toggle Animation</div>
+        <div class="demo-button" onclick="changeColors()">Change Colors</div>
+    </div>
+
+    <div class="overlay"></div>
+    
+    <div class="loading-container" role="status" aria-live="polite">
+        <div class="lotus">
+            <div class="petals-container">
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+                <div class="petal-wrapper"><div class="petal"></div></div>
+            </div>
+            <div class="center"></div>
+        </div>
+        <div class="loading-text">LOADING...</div>
+    </div>
+
+    <script>
+        let isAnimating = true;
+        let colorIndex = 0;
+        
+        const colorSchemes = [
+            {
+                petal1: 'linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%)',
+                petal2: 'linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%)',
+                petal3: 'linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)',
+            },
+            {
+                petal1: 'linear-gradient(45deg, #89f7fe 0%, #66a6ff 100%)',
+                petal2: 'linear-gradient(45deg, #a1c4fd 0%, #c2e9fb 100%)',
+                petal3: 'linear-gradient(45deg, #b721ff 0%, #21d4fd 100%)',
+            },
+            {
+                petal1: 'linear-gradient(45deg, #fbc2eb 0%, #a6c1ee 100%)',
+                petal2: 'linear-gradient(45deg, #fdcbf1 0%, #e6dee9 100%)',
+                petal3: 'linear-gradient(45deg, #ff7e5f 0%, #feb47b 100%)',
+            },
+            {
+                petal1: 'linear-gradient(45deg, #a8ff78 0%, #78ffd6 100%)',
+                petal2: 'linear-gradient(45deg, #fdfbfb 0%, #ebedee 100%)',
+                petal3: 'linear-gradient(45deg, #ffe259 0%, #ffa751 100%)',
+            }
+        ];
+
+        function toggleAnimation() {
+            const petalWrappers = document.querySelectorAll('.petal-wrapper');
+            const petals = document.querySelectorAll('.petal');
+            const center = document.querySelector('.center');
+            const overlay = document.querySelector('.overlay');
+            const loadingText = document.querySelector('.loading-text');
+            
+            const elementsToAnimate = [...petalWrappers, ...petals, center, overlay, loadingText];
+
+            if (isAnimating) {
+                elementsToAnimate.forEach(el => el.style.animationPlayState = 'paused');
+            } else {
+                elementsToAnimate.forEach(el => el.style.animationPlayState = 'running');
+            }
+            
+            isAnimating = !isAnimating;
+        }
+
+        function changeColors() {
+            colorIndex = (colorIndex + 1) % colorSchemes.length;
+            const scheme = colorSchemes[colorIndex];
+            const petals = document.querySelectorAll('.petal');
+            
+            petals.forEach((petal, index) => {
+                if (index % 3 === 0) petal.style.background = scheme.petal1;
+                else if (index % 3 === 1) petal.style.background = scheme.petal2;
+                else petal.style.background = scheme.petal3;
+            });
+        }
+
+        // Add some interactive sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'absolute';
+            sparkle.style.width = '5px';
+            sparkle.style.height = '5px';
+            sparkle.style.background = 'radial-gradient(white, rgba(255, 255, 255, 0.5))';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.opacity = Math.random() * 0.7 + 0.3;
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animation = 'sparkle 2.5s ease-out forwards';
+            sparkle.style.zIndex = '15';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 2500);
+        }
+
+        // Generate sparkles periodically
+        setInterval(createSparkle, 600);
+    </script>
+</body>
+</html>
+
+Here's an image of the effect you described:
+      
